@@ -13,21 +13,22 @@ const Section = styled.section`
 `;
 
 function App() {
-  const [review, setReview] = useState({title: '', content: ''})
+  const [review, setReview] = useState({ title: '', content: '', id:0 })
   const [view, setView] = useState([])
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(true) // 무한 렌더링 방지
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/get')
-    .then((res) => {
-      setView(res.data)
-    })
+      .then((res) => {
+        setView(res.data)
+      })
   }, [toggle])
 
   const clickBtn = () => {
     axios.post('http://localhost:8000/api/insert', {
       title: review.title,
       content: review.content,
+      id: review.id
     }).then(() => {
       alert('등록')
       setToggle(!toggle)
@@ -36,26 +37,38 @@ function App() {
     })
   }
 
+  // const delBtn = () => {
+  //   axios.delete('http://localhost:8000/api/delete', {
+
+  //   })
+  // }
+
   const getValue = (e) => {
-    const {name, value} = e.target
+    const { name, value } = e.target
     setReview({
       ...review,
-      [name]: value
+      [name]: value,
+      id: Date.now()
     })
   }
-
 
   return (
     <div className="App">
       <h1>맛집을 공유해줘요!</h1>
 
       <Section>
-        {view.map((el, i) => 
-        <div className='view-review' key={i}>
-          <h2>{el.title}</h2>
-          <div>{el.content}</div>
+        {view.map((el, i) =>
+          <div className='view-review' key={i}>
+            <article>
+              <h2>{el.title}</h2>
+              <div>{el.content}</div>
+            </article>
+
+            {/* <button className='delete-button'
+            onClick={delBtn}
+            >삭제</button> */}
           </div>
-          )}
+        )}
       </Section>
 
       <div className='text-wrapper'>
@@ -71,7 +84,7 @@ function App() {
       </div>
 
       <button className='input-button'
-      onClick={clickBtn}
+        onClick={clickBtn}
       >입력</button>
 
     </div>
