@@ -18,16 +18,18 @@ app.use(express.json())
 app.get('/api/get', (req, res) => {
     const sqlData = "select * from reviewboard"
     db.query(sqlData, (err, data) => {
+        console.log("data", data);
         res.send(data)
     })
 })
 
 app.post('/api/insert', (req, res) => {
-    console.log(req.body);
+    console.log("req.body", req.body);
     const title = req.body.title;
     const content = req.body.content;
-    const sqlTest = "insert into reviewboard (title, content) values (?, ?)";
-    db.query(sqlTest, [title, content], (err, result) => {
+    const id = req.body.id;
+    const sqlTest = "insert into reviewboard (title, content, id) values (?, ?, ?)";
+    db.query(sqlTest, [title, content, id], (err, result) => {
         res.send('success')
     })
 })
