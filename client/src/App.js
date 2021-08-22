@@ -2,6 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
+import DeleteBtn from './components/DeleteBtn';
 
 const Section = styled.section`
   margin: 0 auto;
@@ -37,12 +38,6 @@ function App() {
     })
   }
 
-  // const delBtn = () => {
-  //   axios.delete('http://localhost:8000/api/delete', {
-
-  //   })
-  // }
-
   const getValue = (e) => {
     const { name, value } = e.target
     setReview({
@@ -52,22 +47,19 @@ function App() {
     })
   }
 
+  const delRender = () => {
+    setToggle(!toggle)
+  }
+
   return (
     <div className="App">
       <h1>맛집을 공유해줘요!</h1>
 
       <Section>
         {view.map((el, i) =>
-          <div className='view-review' key={i}>
-            <article>
-              <h2>{el.title}</h2>
-              <div>{el.content}</div>
-            </article>
-
-            {/* <button className='delete-button'
-            onClick={delBtn}
-            >삭제</button> */}
-          </div>
+          <DeleteBtn key={i} title={el.title} content={el.content}
+          id={el.id} delRender={delRender}
+          />
         )}
       </Section>
 
@@ -75,7 +67,8 @@ function App() {
         <input className='title' type='text'
           placeholder='제목'
           name='title'
-          onChange={getValue}></input>
+          onChange={getValue}
+          autocomplete="off"></input>
 
         <textarea className='content' type='text'
           placeholder='내용'
