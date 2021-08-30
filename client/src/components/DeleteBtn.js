@@ -1,4 +1,11 @@
 import axios from 'axios';
+import styled from 'styled-components';
+import UpdateBtn from './UpdateBtn';
+
+const RightArticle = styled.article`
+    display : flex;
+    flex-direction : row;
+`;
 
 const DeleteBtn = (props) => {
     // console.log("props", props);
@@ -23,9 +30,13 @@ const DeleteBtn = (props) => {
                 <div>{props.content}</div>
             </article>
 
-            <button className='delete-button'
-                onClick={delBtn}
-            >삭제</button>
+            <RightArticle>
+                <button className='delete-button'
+                    onClick={delBtn}
+                >삭제</button>
+
+                <UpdateBtn />
+            </RightArticle>
         </div>
     );
 };

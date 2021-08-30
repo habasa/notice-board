@@ -39,6 +39,9 @@
   border-radius: 5px;
   background: goldenrod;
 }
+.input-button:hover {
+  background-color: yellowgreen;
+}
 
 .delete-button {
   width: 100px;
@@ -48,4 +51,7 @@
   border: none;
   border-radius: 5px;
   background: goldenrod;
+}
+.delete-button:hover {
+  background-color: yellowgreen;
 }
