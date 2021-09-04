@@ -1,15 +1,16 @@
 const express = require('express')
 const app = express()
-const mysql = require('mysql')
-const PORT = process.env.port || 8000;
+const mysql = require('mysql2')
+require('dotenv').config()
+const PORT = process.env.DB_PORT;
 const cors = require('cors')
 // yarn dev nodemon
 
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'reviewboard'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_DATABASE
 })
 
 app.use(cors())
@@ -45,7 +46,6 @@ app.delete('/api/delete', (req, res) => {
         res.send('success')
     })
 })
-
 app.listen(PORT, (err) => {
     if(err) {
         console.log(error);
